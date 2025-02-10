@@ -1,0 +1,44 @@
+.preview_image {
+    background-image: url('../images/ebook-example.jpg');
+}
+body {
+    background-color: #302c42;
+}
+
+.header{
+   margin: 20px; 
+}
+main{
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.linkProject{
+    text-decoration: none;
+    background-color: white;
+    color:#302c42;
+    font-weight: 600;
+    border-radius: 20px;
+    width: fit-content;
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.intro{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.intro_title{
+    font-size: 40px;
+}
+
+.intro_text {
+    font-size: 18px;
+    font-weight:lighter;
+    text-align: center;
+}

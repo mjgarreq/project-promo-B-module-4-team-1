@@ -1,0 +1,23 @@
+.landing_cards{
+display: grid;
+grid-template-columns: 1fr ;
+gap: 30px;
+
+
+}
+
+@media (min-width: 768px){
+    .landing_cards{
+        display: grid;
+        grid-template-columns: 1fr 1fr ;
+        gap: 30px;
+        margin-top: 120px;
+        }
+
+}
+
+
+.main_landing{
+    height: 100vh;
+    margin-bottom: 50px;
+}
