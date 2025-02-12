@@ -14,3 +14,7 @@ UPDATE freedb_proyectosMolonesB2025.autor SET photo = "https://img.freepik.com/v
 SELECT * FROM freedb_proyectosMolonesB2025.autor;
 SELECT * FROM freedb_proyectosMolonesB2025.proyectos;
 
+SELECT *
+FROM freedb_proyectosMolonesB2025.proyectos, freedb_proyectosMolonesB2025.autor
+WHERE autor.id_autor = proyectos.fk_autor;
+
