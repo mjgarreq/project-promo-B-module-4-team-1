@@ -27,7 +27,7 @@ function InputButton(props) {
   return (
     <>
     <label htmlFor={props.inputButton} className="button">{props.textLabel}</label>
-    <input className="addForm__hidden" type="file" name={props.inputButton} id={props.inputButton} ref={myFileField} onChange={uploadImage}/>
+    <input className="addForm__hidden " type="file" name={props.inputButton} id={props.inputButton} ref={myFileField} onChange={uploadImage} required />
     </>
   )
 }
