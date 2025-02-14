@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+
 
 function Button(props) {
 
-  const [errormessage, setErrorMessage] = useState ("")
+ 
   const handleClick=(ev)=>{
     ev.preventDefault();
 
@@ -19,7 +19,7 @@ function Button(props) {
         if(data.success){
           props.setUrl(data.cardURL)
         } else{
-          setErrorMessage(`Error en la creación de la tarjeta. ${data.error}`)
+          props.setErrorMessage(`Error en la creación de la tarjeta. ${data.error}`)
           }
           })
       .catch ((error) => {
@@ -33,13 +33,13 @@ function Button(props) {
   return (
     <>
     <button type="submit" className="button--large" onClick={handleClick}>{props.text}</button>
-    <p className="errormessage">{errormessage}</p>
     </>
   )
 }
 
 Button.propTypes = {
     text: PropTypes.string,
+    setErrorMessage: PropTypes.func,
 }
 
 

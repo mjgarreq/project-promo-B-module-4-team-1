@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button from "./Button";
 import InputButton from "./InputButton";
 
@@ -9,6 +10,8 @@ function Form(props) {
         const value = ev.target.value;
         props.changeCard(input, value);
     }
+
+    const [errormessage, setErrorMessage] = useState ("* Revisa que no haya campos en rojo y que se hayan subido las fotos correctamente.")
 
   return (
     <form className="addForm">
@@ -34,12 +37,12 @@ function Form(props) {
         <fieldset className="addForm__group--upload">
           <InputButton inputButton="image" textLabel="Subir foto del proyecto" updateAvatar={props.updateAvatar}/>
           <InputButton inputButton="photo" textLabel="Subir foto de la autora" updateAvatar={props.updateAvatar}/>
-          <Button card={props.object} text="Crear proyecto" setUrl={props.setUrl}/>
+          <Button card={props.object} text="Crear proyecto" setUrl={props.setUrl} setErrorMessage={setErrorMessage}/>
           
         </fieldset>
     
         <fieldset className="fieldset__url">
-        {props.url ? <a className="url" href={props.url} target="_blank">Ver Tarjeta</a>: <p className="textcheck"> * Revisa que no haya campos en rojo y que se hayan subido las fotos correctamente. </p>}
+        {props.url ? <a className="url" href={props.url} target="_blank">Ver Tarjeta</a>: <p className="errormessage">  {errormessage} </p>}
         </fieldset>
       </form>
   )
