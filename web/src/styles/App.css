@@ -339,9 +339,7 @@
     display: none;
   }
   
-  .addForm .addForm__hidden:invalid {
-    border: 2px dashed red;
-  }
+ 
   .addForm .addForm__2col {
     width: calc( 100% - 20px );
     margin: 10px auto;

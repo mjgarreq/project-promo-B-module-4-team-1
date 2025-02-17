@@ -31,17 +31,10 @@ function Landing() {
       })
     },[])
 
-  
     console.log (card)
     const infoHtml = card.map((card, index) => <Card key={index} data={card}/>)
-
-    
-
-    
-
-
+  
   return (
-
     <>
     <main className="main_landing">
     <HeroLanding/>
