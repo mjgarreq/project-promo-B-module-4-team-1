@@ -1,23 +1,43 @@
 
 import HeroLanding from "./HeroLanding";
 import Card from "./Card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../styles/LandingCards.css";
 
 
 function Landing() {
-  const [card, setCard] = useState({
-      name: "",
-      slogan: "",
-      technologies:"",
-      repo:"",
-      demo:"",
-      desc:"",
-      autor:"",
-      job:"",
-      image:"",
-      photo: "",
-    })
+  const [card, setCard] = useState([])
+
+    useEffect ( () =>{
+      fetch ("http://localhost:5001/project/list")
+      .then ((response) => response.json())
+      .then ((data) => {
+        console.log(data)
+        const projectInfo = data.data.map((card) =>{
+          return {
+            name: card.name,
+            slogan: card.slogan,
+            technologies:card.technologies,
+            repo:card.repo,
+            demo:card.demo,
+            desc:card.desc,
+            autor:card.autor,
+            job:card.job,
+            image:card.image,
+            photo: card.photo,
+          };
+        });
+        setCard (projectInfo);
+      })
+    },[])
+
+  
+    console.log (card)
+    const infoHtml = card.map((card, index) => <Card key={index} data={card}/>)
+
+    
+
+    
 
 
   return (
@@ -27,11 +47,9 @@ function Landing() {
     <HeroLanding/>
 
     <div className="landing_cards">
-
-    <Card data ={card}/>
-    <Card data ={card}/>
-    <Card data ={card}/>
-    <Card data ={card}/>
+  
+    {infoHtml}
+ 
     </div>
     </main>
     </>
