@@ -3,6 +3,7 @@ import HeroLanding from "./HeroLanding";
 import Card from "./Card";
 import { useEffect, useState } from "react";
 import "../styles/LandingCards.css";
+import "../styles/App.css"
 
 
 function Landing() {

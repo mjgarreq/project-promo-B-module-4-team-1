@@ -1,7 +1,8 @@
 .landing_cards{
-display: grid;
-grid-template-columns: 1fr ;
-gap: 30px;
+    
+    display: grid;
+    grid-template-columns: 1fr ;
+    gap: 30px;
 
 
 }
@@ -18,6 +19,6 @@ gap: 30px;
 
 
 .main_landing{
-    height: 100vh;
+    height: 100%;
     margin-bottom: 50px;
 }
