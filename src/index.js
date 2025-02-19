@@ -73,7 +73,7 @@ server.post("/newproject", async (req, res)=>{
             newProject.image,
             newProject.url_github,
             newProject.url_demo,
-            newProject.resultAutora.insertId,
+            resultAutora.insertId,
             newProject.slogan,
         ])
         connection.end();
