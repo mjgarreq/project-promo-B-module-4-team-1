@@ -2,6 +2,7 @@
 
 const express = require('express');
 const cors = require('cors');
+const mysql = require('mysql2/promise');
 
 // 2. CREAL EL SERVIDOR
 
@@ -14,74 +15,79 @@ const server = express();
 server.use(cors());
 server.use(express.json());
 
-const projectsList =[
-
-    {
-        name: "PixelCraft",
-        slogan: "Una plataforma interactiva para artistas digitales que permite crear, compartir y vender obras en formato pixel art",
-        technologies:"React, Firebase, TailwindCSS, Node.js",
-        repo:"https://adalab.es/",
-        demo:"https://adalab.es/",
-        desc:"Una plataforma interactiva para artistas digitales que permite crear, compartir y vender obras en formato pixel art",
-        autor:"Anacleta",
-        job:"Fullstack Developer",
-        image:"https://img.freepik.com/vector-gratis/companeros-piso-comenzando-proyecto-empresarial_23-2148857003.jpg",
-        photo: "https://img.freepik.com/vector-gratis/avatar-mujer-estilo-plano_90220-2876.jpg?t=st=1739273301~exp=1739276901~hmac=76eb3a0906e0b8412bbf5536d4cf08808ecf7927518171de26f79820ca1b9ac7&w=826",
-    },
-    {
-        name: "CodeSphere",
-        slogan: "Un sistema de gestión de tareas para equipos de desarrollo, con integración de seguimiento de errores y control de versiones.",
-        technologies:"Vue.js, Express.js, PostgreSQL, Docker",
-        repo:"https://adalab.es/",
-        demo:"https://adalab.es/",
-        desc:"Un sistema de gestión de tareas para equipos de desarrollo, con integración de seguimiento de errores y control de versiones.",
-        autor:"Petra",
-        job:"Backend Developer",
-        image:"https://d2fl3xywvvllvq.cloudfront.net/wp-content/uploads/2019/10/nutcache-image-2-600x360.jpg",
-        photo: "https://img.freepik.com/vector-gratis/avatar-mujer-estilo-plano_90220-2876.jpg?t=st=1739273301~exp=1739276901~hmac=76eb3a0906e0b8412bbf5536d4cf08808ecf7927518171de26f79820ca1b9ac7&w=826",
-    },
-    {
-        name: "GreenTrail",
-        slogan: "Una aplicación móvil para excursionistas que ofrece mapas interactivos, seguimiento de rutas y alertas de clima en tiempo real",
-        technologies:"Flutter, Google Maps API, GraphQL, AWS Lambda",
-        repo:"https://adalab.es/",
-        demo:"https://adalab.es/",
-        desc:"Una aplicación móvil para excursionistas que ofrece mapas interactivos, seguimiento de rutas y alertas de clima en tiempo real",
-        autor:"Maria",
-        job:"Frontend Developer",
-        image:"https://media.istockphoto.com/id/1423812541/es/vector/gesti%C3%B3n-de-proyectos-plan-estrat%C3%A9gico-para-administrar-recursos-para-el-desarrollo-proceso.jpg?s=612x612&w=0&k=20&c=joeJiCynQuczSkUXdu6m7oaUSTy4LN7RfVfLbq1wv6U=",
-        photo: "https://img.freepik.com/vector-gratis/avatar-mujer-estilo-plano_90220-2876.jpg?t=st=1739273301~exp=1739276901~hmac=76eb3a0906e0b8412bbf5536d4cf08808ecf7927518171de26f79820ca1b9ac7&w=826",
-    },
-    {
-        name: "DataBridge",
-        slogan: "Un dashboard empresarial para conectar fuentes de datos en tiempo real, analizar KPIs y generar informes dinámicos.",
-        technologies:"Angular, D3.js, MongoDB, Kubernetes",
-        repo:"https://adalab.es/",
-        demo:"https://adalab.es/",
-        desc:"Un dashboard empresarial para conectar fuentes de datos en tiempo real, analizar KPIs y generar informes dinámicos.",
-        autor:"Lucia",
-        job:"UX/UI",
-        image:"https://educatics.ar/wp-content/uploads/proyectos-finales-exitosos.jpg",
-        photo: "https://img.freepik.com/vector-gratis/avatar-mujer-estilo-plano_90220-2876.jpg?t=st=1739273301~exp=1739276901~hmac=76eb3a0906e0b8412bbf5536d4cf08808ecf7927518171de26f79820ca1b9ac7&w=826",
-    }
-]
-
-server.get ("/project/list", (req, res)=>{
-  
-    res.json({
-        success:true,
-        data: projectsList
+async function connectDB(){
+    const conex = await mysql.createConnection({
+        host: 'sql.freedb.tech', 
+        user: 'freedb_adminmj', 
+        password: '4FBcBwuUNeEtx@$',
+        database: 'freedb_proyectosMolonesB2025',
     })
+    conex.connect();
+    return conex
+};
+
+server.get ("/project/list", async (req, res)=>{
+  try {
+    const connection = await connectDB();
+    const sql = 'SELECT proyectos.name AS name, proyectos.slogan AS slogan, proyectos.technologies AS technologies, proyectos.url_github AS repo, proyectos.url_demo AS demo, proyectos.description AS `desc`, proyectos.image AS image, autor.name AS autor, autor.job AS job, autor.photo AS photo FROM proyectos INNER JOIN autor ON autor.id_autor = proyectos.fk_autor';
+    const [result] = await connection.query(sql);
+    connection.end();
+    console.log(result)
+    if(result.length === 0) {
+        res.status(404).json({
+          success: false,
+          data: "No se encontraron proyectos",
+        });
+      } else {
+        res.status(200).json({
+            success:true,
+            data: result,
+        })
+      }
+    
+  } catch (error) {
+    console.log(error)
+      res.status(500).json({
+      status:"error",
+      message: error,
+    });
+  }  
+    
 })
 
-server.post("/newproject", (req, res)=>{
-    const newData = req.body;
-    projectsList.push(newData);
-    res.status(200).json({
+server.post("/newproject", async (req, res)=>{
+    try {
+        const newProject = req.body;
+        const connection = await connectDB();
+        const insertAutora = 'INSERT INTO autor (name, job, photo) VALUE (?, ?, ?)'
+        const [resultAutora] = await connection.query(insertAutora, [
+            newProject.name, 
+            newProject.job, 
+            newProject.photo,
+        ]);
+        const insertProject = 'INSERT INTO proyectos (name, description, technologies, image, url_github, url_demo, fk_autor, slogan) VALUES (?,?,?,?,?,?,?,?)';
+        const [resultProject] = await connection.query(insertProject, [
+            newProject.name,
+            newProject.description, 
+            newProject.technologies, 
+            newProject.image,
+            newProject.url_github,
+            newProject.url_demo,
+            newProject.resultAutora.insertId,
+            newProject.slogan,
+        ])
+        connection.end();
+        
+        res.status(200).json({
         success: true,
-        message: "Proyecto añadido con éxito",
-        data: projectsList,
+        cardURL: `http://localhost:5001/detail/${resultProject.insertId}`,
     })
+    } catch (error) {
+        res.status(500).json({
+        status:"error",
+        message: error,
+        });
+    }
 })
 
 
