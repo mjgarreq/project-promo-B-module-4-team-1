@@ -58,21 +58,23 @@ server.get ("/project/list", async (req, res)=>{
 server.post("/newproject", async (req, res)=>{
     try {
         const newProject = req.body;
+        console.log(newProject);
+        
         const connection = await connectDB();
         const insertAutora = 'INSERT INTO autor (name, job, photo) VALUE (?, ?, ?)'
         const [resultAutora] = await connection.query(insertAutora, [
-            newProject.name, 
+            newProject.autor, 
             newProject.job, 
             newProject.photo,
         ]);
         const insertProject = 'INSERT INTO proyectos (name, description, technologies, image, url_github, url_demo, fk_autor, slogan) VALUES (?,?,?,?,?,?,?,?)';
         const [resultProject] = await connection.query(insertProject, [
             newProject.name,
-            newProject.description, 
+            newProject.desc, 
             newProject.technologies, 
             newProject.image,
-            newProject.url_github,
-            newProject.url_demo,
+            newProject.repo,
+            newProject.demo,
             resultAutora.insertId,
             newProject.slogan,
         ])
@@ -85,9 +87,9 @@ server.post("/newproject", async (req, res)=>{
     } catch (error) {
         res.status(500).json({
         status:"error",
-        message: error,
+        message: error.message,
         });
-    }
+     }
 })
 
 

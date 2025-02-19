@@ -7,7 +7,7 @@ function Button(props) {
   const handleClick=(ev)=>{
     ev.preventDefault();
 
-      fetch("https://dev.adalab.es/api/projectCard",{
+      fetch("http://localhost:5001/newproject",{
         body: JSON.stringify(props.card),
         method:"POST",
         headers: {
@@ -19,7 +19,7 @@ function Button(props) {
         if(data.success){
           props.setUrl(data.cardURL)
         } else{
-          props.setErrorMessage(`Error en la creación de la tarjeta. ${data.error}`)
+          props.setErrorMessage(`Error en la creación de la tarjeta. ${data.message}`)
           }
           })
       .catch ((error) => {
