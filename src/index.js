@@ -14,6 +14,7 @@ const server = express();
 //indicamos al servidor que acepte peticiones de cualquier ruta externa (react, html, etc. desde cualquier lado)
 server.use(cors());
 server.use(express.json());
+server.set("view engine", "ejs");
 
 async function connectDB(){
     const conex = await mysql.createConnection({
@@ -61,35 +62,54 @@ server.post("/newproject", async (req, res)=>{
         console.log(newProject);
         
         const connection = await connectDB();
-        const insertAutora = 'INSERT INTO autor (name, job, photo) VALUE (?, ?, ?)'
-        const [resultAutora] = await connection.query(insertAutora, [
-            newProject.autor, 
-            newProject.job, 
-            newProject.photo,
-        ]);
-        const insertProject = 'INSERT INTO proyectos (name, description, technologies, image, url_github, url_demo, fk_autor, slogan) VALUES (?,?,?,?,?,?,?,?)';
-        const [resultProject] = await connection.query(insertProject, [
-            newProject.name,
-            newProject.desc, 
-            newProject.technologies, 
-            newProject.image,
-            newProject.repo,
-            newProject.demo,
-            resultAutora.insertId,
-            newProject.slogan,
-        ])
-        connection.end();
         
-        res.status(200).json({
-        success: true,
-        cardURL: `http://localhost:5001/detail/${resultProject.insertId}`,
-    })
+        
+        if (newProject && newProject.autor !== "" && newProject.job !== "" && newProject.photo !== "" && newProject.name !== "" && newProject.desc !== "" && newProject.technologies !== "" && newProject.image !== "" && newProject.repo !== "" && newProject.demo !== "" && newProject.slogan !== "") {
+
+          const insertAutora = 'INSERT INTO autor (name, job, photo) VALUE (?, ?, ?)'
+          const [resultAutora] = await connection.query(insertAutora, [
+              newProject.autor, 
+              newProject.job, 
+              newProject.photo,
+          ]);
+          const insertProject = 'INSERT INTO proyectos (name, description, technologies, image, url_github, url_demo, fk_autor, slogan) VALUES (?,?,?,?,?,?,?,?)';
+          const [resultProject] = await connection.query(insertProject, [
+              newProject.name,
+              newProject.desc, 
+              newProject.technologies, 
+              newProject.image,
+              newProject.repo,
+              newProject.demo,
+              resultAutora.insertId,
+              newProject.slogan,
+          ])
+          connection.end();
+          res.status(200).json({
+            success: true,
+            cardURL: `http://localhost:5001/detail/${resultProject.insertId}`,
+          })
+        }
+        
+    
     } catch (error) {
         res.status(500).json({
         status:"error",
         message: error.message,
         });
      }
+});
+
+server.get('/detail/:id', async (req, res) => {
+  try {
+    const connection = await connectDB();
+    const {id} = req.params;
+    const sql = "SELECT proyectos.name AS name, proyectos.slogan AS slogan, proyectos.technologies AS technologies, proyectos.url_github AS repo, proyectos.url_demo AS demo, proyectos.description AS `desc`, proyectos.image AS image, autor.name AS autor, autor.job AS job, autor.photo AS photo FROM proyectos INNER JOIN autor ON autor.id_autor = proyectos.fk_autor WHERE id_proyecto = ?"
+    const [result] = await connection.query(sql, [id]);
+    connection.end();
+    res.render("detail", {project: result[0]})
+  } catch (error) {
+    
+  }
 })
 
 
@@ -106,3 +126,4 @@ server.listen(PORT, () => {
 //servidor estático
 const urlServerStatic = './src/public'; //vamos a buscar desde la carpeta raiz
 server.use(express.static(urlServerStatic));
+server.use(express.static("./css"))

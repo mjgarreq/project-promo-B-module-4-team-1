@@ -6,7 +6,7 @@ function Button(props) {
  
   const handleClick=(ev)=>{
     ev.preventDefault();
-
+    props.checkValidInput();
       fetch("http://localhost:5001/newproject",{
         body: JSON.stringify(props.card),
         method:"POST",
@@ -28,7 +28,7 @@ function Button(props) {
     };
 
 
-
+    
 
   return (
     <>
@@ -40,6 +40,8 @@ function Button(props) {
 Button.propTypes = {
     text: PropTypes.string,
     setErrorMessage: PropTypes.func,
+    setUrl: PropTypes.func,
+    card: PropTypes.object,
 }
 
 
