@@ -101,35 +101,48 @@ function Form(props) {
         <fieldset className="addForm__group">
           <legend className="addForm__title">Cuéntanos sobre el proyecto</legend>
           <input className="addForm__input" type="text" name="name" id="name" placeholder="Nombre del proyecto" onChange={handleChangeInput} required/>
-          <span>{errors.name}</span>
+          <span className="error">{errors.name}</span>
 
           <input className="addForm__input" type="text" name="slogan" id="slogan" placeholder="Slogan" onChange={handleChangeInput} required/>
-          <span>{errors.slogan}</span>
+          <span className="error">{errors.slogan}</span>
           <div className="addForm__2col">
-            <input className="addForm__input" type="url" name="repo" id="repo" placeholder="Repositorio" onChange={handleChangeInput} required/>
-            <span>{errors.repo}</span>
-            <input className="addForm__input" type="url" name="demo" id="demo" placeholder="Demo" onChange={handleChangeInput} required/>
-            <span>{errors.demo}</span>
+
+            <div className="divRepoDemo">
+            <input className="addForm__inputB" type="url" name="repo" id="repo" placeholder="Repositorio" onChange={handleChangeInput} required/>
+            <span className="error">{errors.repo}</span>
+            </div>
+            
+            <div className="divRepoDemo">
+            <input className="addForm__inputB" type="url" name="demo" id="demo" placeholder="Demo" onChange={handleChangeInput} required/>
+            <span className="error">{errors.demo}</span>
+            </div>
+           
           </div>         
           <input className="addForm__input" type="text" name="technologies" id="technologies" placeholder="Tecnologías" onChange={handleChangeInput} required/>
-          <span>{errors.technologies}</span>
+          <span className="error">{errors.technologies}</span>
           <textarea className="addForm__input" type="text" name="desc" id="desc" placeholder="Descripción" rows="5" onChange={handleChangeInput} required></textarea>
-          <span>{errors.desc}</span>
+          <span className="error">{errors.desc}</span>
         </fieldset>
 
         <fieldset className="addForm__group">
           <legend className="addForm__title">Cuéntanos sobre la autora</legend>
           <input className="addForm__input" type="text" name="autor" id="autor" placeholder="Nombre" onChange={handleChangeInput} required/>
-          <span>{errors.autor}</span>
+          <span className="error">{errors.autor}</span>
           <input className="addForm__input" type="text" name="job" id="job" placeholder="Trabajo" onChange={handleChangeInput} required/>
-          <span>{errors.job}</span>
+          <span className="error">{errors.job}</span>
         </fieldset>
 
         <fieldset className="addForm__group--upload">
+          <div className="divRepoDemo">
           <InputButton inputButton="image" textLabel="Subir foto del proyecto" updateAvatar={props.updateAvatar}/>
-          <span>{errors.image}</span>
+          <span className="error">{errors.image}</span>
+          </div>
+          
+          <div className="divRepoDemo">
           <InputButton inputButton="photo" textLabel="Subir foto de la autora" updateAvatar={props.updateAvatar}/>
-          <span>{errors.photo}</span>
+          <span className="error">{errors.photo}</span>
+          </div>
+          
           <Button card={props.object} text="Crear proyecto" setUrl={props.setUrl} setErrorMessage={setErrorMessage} checkValidInput={checkValidInput}/>
           
         </fieldset>
