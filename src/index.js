@@ -13,7 +13,7 @@ const server = express();
 
 //indicamos al servidor que acepte peticiones de cualquier ruta externa (react, html, etc. desde cualquier lado)
 server.use(cors());
-server.use(express.json());
+server.use(express.json({limit:"25mb"}));
 server.set("view engine", "ejs");
 
 async function connectDB(){

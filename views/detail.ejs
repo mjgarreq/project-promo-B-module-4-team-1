@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle proyecto</title>
     <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <section class="preview">
@@ -33,11 +34,11 @@
             <div class="card__technicalInfo">
                 <p class="card__technologies"><%= project.technologies%></p>
             
-                <a class="icon icon__www" href="<%= project.demo%>" title="Haz click para ver el proyecto online" target="_blank">
-                Web link
+                <a class="icon__www" href="<%= project.demo%>" title="Haz click para ver el proyecto online" target="_blank">
+                    <i class="icon fa-solid fa-earth-americas"></i>
                 </a>
-                <a class="icon icon__github" href="<%= project.repo%>" title="Haz click para ver el código del proyecto" target="_blank">
-                GitHub link
+                <a class="icon__github" href="<%= project.repo%>" title="Haz click para ver el código del proyecto" target="_blank">
+                    <i class="icon fa-brands fa-github"></i>
                 </a>
             </div>
             </div>

@@ -28,37 +28,71 @@ function Form(props) {
 
     const checkValidInput = () => {
       const errorClone = {...errors}
+      console.log(props.object)
+      let respuesta = false;
+
       if (props.object.name === "") {
         errorClone.name ='Falta rellenar el nombre del proyecto.';
+        respuesta = true; 
+      }else{
+        errorClone.name = "";
       }
       if (props.object.slogan === "") {
         errorClone.slogan ='Falta rellenar el slogan.';
+        respuesta = true; 
+      }else{
+        errorClone.slogan = "";
       }
       if (props.object.repo === "") {
-        errorClone.repo ='Falta la URL del repositorio.';
+        errorClone.repo ='Falta la url del repositorio.';
+        respuesta = true; 
+      }else{
+        errorClone.repo = "";
       }
       if (props.object.demo === "") {
-        errorClone.demo ='Falta la URL de la demo del proyecto.';
+        errorClone.demo ='Falta la url de la demo del proyecto.';
+        respuesta = true; 
+      }else{
+        errorClone.demo = "";
       }
       if (props.object.technologies === "") {
         errorClone.technologies ='Falta añadir las tecnologías usadas.';
+        respuesta = true; 
+      }else{
+        errorClone.technologies = "";
       }
       if (props.object.desc === "") {
         errorClone.desc ='Falta rellenar la descripción del proyecto.';
+        respuesta = true; 
+      }else{
+        errorClone.desc = "";
       }
       if (props.object.autor === "") {
-        errorClone.autor ='Falta rellenar el nombre de la autora.';
+        errorClone.autor ='Falta el nombre de la autora.';
+        respuesta = true; 
+      }else{
+        errorClone.autor = "";
       }
       if (props.object.job === "") {
         errorClone.job ='Falta rellenar el trabajo de la autora.';
+        respuesta = true; 
+      }else{
+        errorClone.job = "";
       }
       if (props.object.photo === "") {
         errorClone.photo ='Falta subir la foto de la autora.';
+        respuesta = true; 
+      }else{
+        errorClone.photo = "";
       }
       if (props.object.image === "") {
-        errorClone.image ='Falta subir la foto del proyecto.';
+        errorClone.image='Falta subir la foto del proyecto.';
+        respuesta = true; 
+      }else{
+        errorClone.image = "";
       }
       setErrors(errorClone);
+      return respuesta
     }
 
   return (
@@ -68,6 +102,7 @@ function Form(props) {
           <legend className="addForm__title">Cuéntanos sobre el proyecto</legend>
           <input className="addForm__input" type="text" name="name" id="name" placeholder="Nombre del proyecto" onChange={handleChangeInput} required/>
           <span>{errors.name}</span>
+
           <input className="addForm__input" type="text" name="slogan" id="slogan" placeholder="Slogan" onChange={handleChangeInput} required/>
           <span>{errors.slogan}</span>
           <div className="addForm__2col">
@@ -85,7 +120,6 @@ function Form(props) {
         <fieldset className="addForm__group">
           <legend className="addForm__title">Cuéntanos sobre la autora</legend>
           <input className="addForm__input" type="text" name="autor" id="autor" placeholder="Nombre" onChange={handleChangeInput} required/>
-          {errors.name !== "" ? <span>{errors.name}</span> : <span>Campo completado</span>}
           <span>{errors.autor}</span>
           <input className="addForm__input" type="text" name="job" id="job" placeholder="Trabajo" onChange={handleChangeInput} required/>
           <span>{errors.job}</span>

@@ -212,19 +212,13 @@
   }
 
   .icon {
-    width: 1.6rem;
-    height: 1.6rem;
-    color: transparent;
+    width: 10px;
+    font-size: 30px;
     cursor: pointer;
-    border-radius: 50%;
-    box-shadow: 0 0 5px 0 var(--color-greyish-brown-two);
+   
+    
   }
-  .icon__www {
-    background-image: url('../images/icons/globe-solid.svg');
-  }
-  .icon__github {
-    background-image: url('../../web/src/images/icons/github.svg');
-  }
+
 
   .preview .projectImage {
     width: 650px;

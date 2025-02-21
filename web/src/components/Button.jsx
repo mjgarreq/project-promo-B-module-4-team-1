@@ -6,7 +6,9 @@ function Button(props) {
  
   const handleClick=(ev)=>{
     ev.preventDefault();
-    props.checkValidInput();
+    const respuesta = props.checkValidInput();
+
+   if (!respuesta){
       fetch("http://localhost:5001/newproject",{
         body: JSON.stringify(props.card),
         method:"POST",
@@ -26,6 +28,7 @@ function Button(props) {
         console.error ("Error en la solicitud", error);
       });
     };
+  };
 
 
     
