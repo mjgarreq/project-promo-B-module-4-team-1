@@ -11,7 +11,7 @@ function Form(props) {
         props.changeCard(input, value);
     }
 
-    const [errormessage, setErrorMessage] = useState ("* Revisa que no haya campos en rojo y que se hayan subido las fotos correctamente.");
+    const [errormessage, setErrorMessage] = useState ("* Revisa que no haya campos en rojo y que se hayan subido las fotos correctamente (las imágenes deben pesar menos de 20KB).");
 
     const [errors, setErrors] = useState({
       name: "",
@@ -80,13 +80,13 @@ function Form(props) {
         errorClone.job = "";
       }
       if (props.object.photo === "") {
-        errorClone.photo ='Falta subir la foto de la autora.';
+        errorClone.photo ='Falta subir la foto de la autora. Revisa que la imagen pese menos de 20KB.';
         respuesta = true; 
       }else{
         errorClone.photo = "";
       }
       if (props.object.image === "") {
-        errorClone.image='Falta subir la foto del proyecto.';
+        errorClone.image='Falta subir la foto del proyecto. Revisa que la imagen pese menos de 20KB.';
         respuesta = true; 
       }else{
         errorClone.image = "";
