@@ -23,7 +23,7 @@ async function connectDB(){
         host: process.env.DATABASE_HOST, //process.env.nombrevariable
         user: process.env.DATABASE_USER, 
         password: process.env.DATABASE_PASSWORD,
-        database: process.env.DATABASE_NAM,
+        database: process.env.DATABASE_NAME,
     })
     conex.connect();
     return conex
