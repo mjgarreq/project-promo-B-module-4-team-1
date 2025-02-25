@@ -3,13 +3,12 @@ import PropTypes from "prop-types";
 
 function Button(props) {
 
- 
+  const apiUrl = import.meta.env.VITE_URL_SERVER;
   const handleClick=(ev)=>{
     ev.preventDefault();
     const respuesta = props.checkValidInput();
-
    if (!respuesta){
-      fetch("http://localhost:5001/newproject",{
+      fetch(`${apiUrl}/newproject`,{
         body: JSON.stringify(props.card),
         method:"POST",
         headers: {
@@ -45,6 +44,7 @@ Button.propTypes = {
     setErrorMessage: PropTypes.func,
     setUrl: PropTypes.func,
     card: PropTypes.object,
+    checkValidInput: PropTypes.func,
 }
 
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "./Button";
 import InputButton from "./InputButton";
-
+import PropTypes from "prop-types";
 
 function Form(props) {
 
@@ -152,6 +152,14 @@ function Form(props) {
         </fieldset>
       </form>
   )
+}
+
+Form.propTypes = {
+    object: PropTypes.object,
+    changeCard: PropTypes.func,
+    updateAvatar: PropTypes.func,
+    setUrl: PropTypes.func,
+    url: PropTypes.string,
 }
 
 export default Form

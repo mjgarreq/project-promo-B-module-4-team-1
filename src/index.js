@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2/promise');
 
+
 // 2. CREAL EL SERVIDOR
 
 //creamos una constante donde le ponemos el nombre que va a tener mi servidor, como por ejemplo app, server
@@ -15,13 +16,14 @@ const server = express();
 server.use(cors());
 server.use(express.json({limit:"25mb"}));
 server.set("view engine", "ejs");
+require('dotenv').config();
 
 async function connectDB(){
     const conex = await mysql.createConnection({
-        host: 'sql.freedb.tech', 
-        user: 'freedb_adminmj', 
-        password: '4FBcBwuUNeEtx@$',
-        database: 'freedb_proyectosMolonesB2025',
+        host: process.env.DATABASE_HOST, //process.env.nombrevariable
+        user: process.env.DATABASE_USER, 
+        password: process.env.DATABASE_PASSWORD,
+        database: process.env.DATABASE_NAM,
     })
     conex.connect();
     return conex
@@ -86,7 +88,7 @@ server.post("/newproject", async (req, res)=>{
           connection.end();
           res.status(200).json({
             success: true,
-            cardURL: `http://localhost:5001/detail/${resultProject.insertId}`,
+            cardURL: `${process.env.URL_SERVER}/detail/${resultProject.insertId}`,
           })
         }
         

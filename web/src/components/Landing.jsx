@@ -8,9 +8,9 @@ import "../styles/App.css"
 
 function Landing() {
   const [card, setCard] = useState([])
-
+  const apiUrl = import.meta.env.VITE_URL_SERVER;
     useEffect ( () =>{
-      fetch ("http://localhost:5001/project/list")
+      fetch (`${apiUrl}/project/list`)
       .then ((response) => response.json())
       .then ((data) => {
         console.log(data)
